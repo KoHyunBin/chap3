@@ -1,20 +1,20 @@
 package main;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import annotation.MemberService;
+import annotation.ReadArticleService;
+import config.AppCtx;
 import xml.Article;
 import xml.Member;
-import xml.MemberService;
-import xml.ReadArticleService;
 import xml.UpdateInfo;
 
-public class Main2 {
+public class Main4 {
 
 	public static void main(String[] args) {
-		String[] config = {"di.xml","aop2.xml"};
-		ApplicationContext ctx = new ClassPathXmlApplicationContext(config);
-		ReadArticleService service = //ReadAritcleServiceImpl 객체
+		ApplicationContext ctx = new AnnotationConfigApplicationContext(AppCtx.class);
+		ReadArticleService service = 
 				ctx.getBean("readArticleService",ReadArticleService.class);
 		try {
 			Article a1 = service.getArticleAndReadCnt(1);
@@ -28,7 +28,6 @@ public class Main2 {
 		MemberService ms = ctx.getBean("memberService",MemberService.class);
 		ms.regist(new Member());
 		ms.update("hong",new UpdateInfo());
-		ms.delete("hong2","test");
-	}
-
+		ms.delete("hong2","test",new UpdateInfo());
+	}//메인 끝
 }
